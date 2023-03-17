@@ -554,6 +554,16 @@ namespace EMR
             if (lable != null)
                 ((Label)lable).Text = value;
         }
+        public delegate void PrintElementFound();
+        protected void BindingLabel(string LabelId, string value, PrintElementFound callback, string prefix = "prt")
+        {
+            var lable = FindControl($"{prefix}_{LabelId}");
+            if (lable != null)
+            {
+                ((Label)lable).Text = value;
+                callback();
+            }
+        }
         protected void BindingLabel(string LabelId, DataTable data, string value, string code = "code", string prefix = "prt")
         {
             if (data != null)

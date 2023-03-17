@@ -660,6 +660,7 @@ namespace EMR
 
             Model.hair_removal_diagram = hair_removal_diagram_data_base64.Value;
             Model.booking_time = EmrHelper.ConvertSQLDateTime(DateTime.Now);
+            Model.amend_reason = txt_amend_reason.Text;
         }
         protected void txt_surgical_time_TextChanged(object sender, EventArgs e)
         {

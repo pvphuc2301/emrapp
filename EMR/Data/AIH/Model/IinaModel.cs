@@ -43,6 +43,7 @@ namespace EMR.Data.AIH.Model
         public dynamic admit_from_desc { get; set; }
         public dynamic admit_from_other { get; set; }
         public string arrived { get; set; }
+        public string arrived_other { get; set; }
         public dynamic admission_reason { get; set; }
         public dynamic previous_admission { get; set; }
         public dynamic past_med_history { get; set; }
@@ -51,11 +52,11 @@ namespace EMR.Data.AIH.Model
         public dynamic past_sur_history_note { get; set; }
         public string substance_abuse { get; set; }
         public string substance_abuse_other { get; set; }
-        public dynamic previous_document { get; set; }
-        public dynamic previous_document_note { get; set; }
+        public bool? previous_document { get; set; }
+        public string previous_document_note { get; set; }
         public dynamic cur_home_medication { get; set; }
-        public dynamic allergy { get; set; }
-        public dynamic allergy_note { get; set; }
+        public bool? allergy { get; set; }
+        public string allergy_note { get; set; }
         public dynamic high_risk_patient { get; set; }
 
         public dynamic vs_temperature { get; set; }
@@ -70,25 +71,25 @@ namespace EMR.Data.AIH.Model
         public string respiratory_system { get; set; }
 
         public dynamic cough { get; set; }
-        public dynamic pro_cough { get; set; }
-        public dynamic pro_cough_note { get; set; }
+        public bool? pro_cough { get; set; }
+        public string pro_cough_note { get; set; }
         public dynamic pulse_code { get; set; }
         public dynamic pulse_desc { get; set; }
         public string presence { get; set; }
         public string extremities { get; set; }
-        public string extremities_specify { get; set; }
+        public string extremities_other { get; set; }
         public string oriented { get; set; }
         public string mental_status { get; set; }
         public string mental_status_other { get; set; }
-        public dynamic hearing_code { get; set; }
-        public dynamic hearing_desc { get; set; }
-        public dynamic vision_code { get; set; }
-        public dynamic vision_desc { get; set; }
-        public dynamic vision_other { get; set; }
-        public dynamic speech_code { get; set; }
-        public dynamic speech_desc { get; set; }
-        public dynamic diet_code { get; set; }
-        public dynamic diet_desc { get; set; }
+        public string hearing_code { get; set; }
+        public string hearing_desc { get; set; }
+        public string vision_code { get; set; }
+        public string vision_desc { get; set; }
+        public string vision_other { get; set; }
+        public string speech_code { get; set; }
+        public string speech_desc { get; set; }
+        public string diet_code { get; set; }
+        public string diet_desc { get; set; }
         public dynamic diet_other { get; set; }
         public dynamic diet_pre_code { get; set; }
         public dynamic diet_pre_desc { get; set; }
@@ -100,7 +101,7 @@ namespace EMR.Data.AIH.Model
         public dynamic food_dislike { get; set; }
         public string bowel_elimination_code { get; set; }
         public string bowel_elimination_desc { get; set; }
-        public string bowel_elimination_specify { get; set; }
+        public string bowel_elimination_other { get; set; }
         public dynamic stool_consistency_code { get; set; }
         public dynamic stool_consistency_desc { get; set; }
         public string gas_presence_code { get; set; }
@@ -125,10 +126,10 @@ namespace EMR.Data.AIH.Model
         //public dynamic age_score { get; set; }
         //public dynamic total_nutri_score { get; set; }
         public dynamic urination { get; set; }
-        public dynamic inter_catheter { get; set; }
-        public dynamic inter_catheter_note { get; set; }
-        public dynamic ind_catheter { get; set; }
-        public dynamic ind_catheter_size { get; set; }
+        public bool? inter_catheter { get; set; }
+        public string inter_catheter_note { get; set; }
+        public bool? ind_catheter { get; set; }
+        public string ind_catheter_size { get; set; }
         public dynamic ind_catheter_date { get; set; }
         public dynamic sup_catheter { get; set; }
         public dynamic sup_catheter_size { get; set; }
@@ -142,9 +143,9 @@ namespace EMR.Data.AIH.Model
         public dynamic para { get; set; }
         public dynamic cur_pregnancy { get; set; }
         public dynamic pregnancy_week { get; set; }
-        public dynamic contraception_code { get; set; }
-        public dynamic contraception_desc { get; set; }
-        public dynamic contraception_other { get; set; }
+        public string contraception_code { get; set; }
+        public string contraception_desc { get; set; }
+        public string contraception_other { get; set; }
         public dynamic mus_history { get; set; }
         public dynamic paralysis { get; set; }
         public dynamic paralysis_note { get; set; }
@@ -175,7 +176,7 @@ namespace EMR.Data.AIH.Model
         public dynamic pain_killer_name { get; set; }
         public dynamic pa_comment { get; set; }
         public dynamic condition { get; set; }
-        public dynamic wounds { get; set; }
+        public string wounds { get; set; }
         public dynamic skin_anno { get; set; }
         public dynamic skin_anno_data { get; set; }
         public dynamic sensory_code { get; set; }
@@ -244,26 +245,33 @@ namespace EMR.Data.AIH.Model
         public dynamic dis_planning { get; set; }
         public dynamic dis_management { get; set; }
         public dynamic assess_date_time { get; set; }
+        public int? document_version { get; set; }
         public override string api => "api/iina";
 
         #endregion
 
-        public DateTime? arrival_date_time { get; set; }
-        public string contact_name { get; set; }
-        public string contact_relationship { get; set; }
+        public dynamic arrival_date_time { get; set; }
+        
 
         public string reassessment { get; set; }
         #region PATIENT GUIDES TO ROOM FACILITIES AND SERVICES
         public string instructions_provided_to { get; set; }
+        public string instructions_provided_to_other { get; set; }
         public string personnel { get; set; }
         public string physical_facilities { get; set; }
         public string policies_and_procedure { get; set; }
         public string safety_precautions { get; set; }
-        public string vb_dentures { get; set; }
-        public string vb_hearing_aid { get; set; }
-        public string vb_eyeglasses { get; set; }
-        public string vb_contact_lenses { get; set; }
-        public string vb_cash_jewelry { get; set; }
+
+        public bool? vb_dentures { get; set; }
+        public string vb_dentures_note { get; set; }
+        public bool? vb_hearing_aid { get; set; }
+        public string vb_hearing_aid_note { get; set; }
+        public bool? vb_eyeglasses { get; set; }
+        public string vb_eyeglasses_note { get; set; }
+        public bool? vb_contact_lenses { get; set; }
+        public string vb_contact_lenses_note { get; set; }
+        public bool? vb_cash_jewelry { get; set; }
+        public string vb_cash_jewelry_note { get; set; }
         public string vb_other { get; set; }
         public bool? is_high_risk_patient { get; set; }
         #endregion

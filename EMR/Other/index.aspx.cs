@@ -305,7 +305,7 @@ namespace EMR.Other
             string varFullName = Convert.ToString(Session["UserName"]);
             string varEmail = Convert.ToString(Session["user_email"]);
             
-            string varUrl = "http://emr.aih.com.vn/report/AllowUpdateEMR.aspx";
+            //string varUrl = "http://emr.aih.com.vn/report/AllowUpdateEMR.aspx";
 
             string apiString = $"api/patient/allow-doc-req/{pvid}/{varUserName}?full_name={varFullName}&email={varEmail}&reason={txtUpdateReason.Text}";
 

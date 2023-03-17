@@ -355,6 +355,7 @@ namespace EMR
             {
                 Model.special_request_specify = txt_special_request_specify.Value;
             }
+            Model.amend_reason = txt_amend_reason.Text;
         }
 
         #region ServerValidate

@@ -14,8 +14,8 @@ namespace EMR.UserControls
         public void LoadData(PlaceHolder container, PatientInfo patientInfo, PatientVisitInfo patientVisitInfo)
         {
             container.Controls.Add(this);
-            patientInfo = patientInfo;
-            patientVisitInfo = patientVisitInfo;
+            this.patientInfo = patientInfo;
+            this.patientVisitInfo = patientVisitInfo;
             LoadPatientInfo(true); // Patient Info Vietnamese
             LoadPatientVisitInfo(true); // Patient Visit Info
         }

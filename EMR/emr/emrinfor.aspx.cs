@@ -556,7 +556,7 @@ namespace EMR
 
         public void LoadLeftMenu()//object sender, EventArgs e
         {
-            string query = "";
+            //string query = "";
             dynamic response = WebHelpers.GetAPI($"api/emr/menu-form/{loc}/{varPID}");
 
             //if (response.Status == System.Net.HttpStatusCode.OK)

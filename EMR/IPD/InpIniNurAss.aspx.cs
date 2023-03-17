@@ -1710,6 +1710,13 @@ namespace EMR
                     currentLog.Visible = false;
                 }
 
+                if (iina.document_version != null && iina.document_version == 2)
+                {
+                    PAGE_URL = $"/IPD/InpIniNurAssRV05.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+
+                    Response.Redirect(PAGE_URL, false);
+                }
+
                 LoadPatientInfo();
                 //loadRadGridHistoryLog();
 

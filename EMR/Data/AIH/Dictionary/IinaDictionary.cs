@@ -1,65 +1,70 @@
-﻿using EMR.Data.Shared.Services;
-using EMR.icons;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Services.Description;
-using Telerik.Web;
-using Telerik.Web.UI.HtmlChart;
-using Telerik.Web.UI.Map;
-using Telerik.Windows.Documents.Model.Drawing.Charts;
-using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
+﻿using System.Collections.Generic;
 
 namespace EMR.Data.AIH.Dictionary
 {
     public class IinaDictionary
     {
         #region I. THÔNG TIN TỔNG QUÁT VỀ NGƯỜI BỆNH/ GENERAL PATIENT INFORMATION
+        public const string RESIDENCE_CODE_VNM = "VNM";
+        public const string RESIDENCE_CODE_OTH = "OTH";
         public static Dictionary<string, string> RESIDENCE_CODE = new Dictionary<string, string>()
         {
-            { "VNM", "Việt Nam" },
-            { "OTH", "Khác" },
+            { RESIDENCE_CODE_VNM, "Việt Nam" },
+            { RESIDENCE_CODE_OTH, "Khác" },
         };
+        public const string LANGUAGE_CODE_VI = "VI";
+        public const string LANGUAGE_CODE_EN = "EN";
+        public const string LANGUAGE_CODE_OTH = "OTH";
         public static Dictionary<string, string> LANGUAGE_CODE = new Dictionary<string, string>()
         {
-            { "VI", "Tiếng Việt" },
-            { "EN", "Tiếng Anh" },
-            { "OTH", "Tiếng khác" },
+            { LANGUAGE_CODE_VI, "Tiếng Việt" },
+            { LANGUAGE_CODE_EN, "Tiếng Anh" },
+            { LANGUAGE_CODE_OTH, "Tiếng khác" },
         };
+        public const string RELIGION_CODE_BH = "BH";
+        public const string RELIGION_CODE_CH = "CH";
+        public const string RELIGION_CODE_OTH = "OTH";
         public static Dictionary<string, string> RELIGION_CODE = new Dictionary<string, string>()
         {
-            { "BH", "Phật giáo/ Buddhism" },
-            { "CH", "Thiên chúa giáo/ Catholic" },
-            { "OTH", "Khác" },
+            { RELIGION_CODE_BH, "Phật giáo/ Buddhism" },
+            { RELIGION_CODE_CH, "Thiên chúa giáo/ Catholic" },
+            { RELIGION_CODE_OTH, "Khác/ Other" },
         };
+        public const string LIVING_STATUS_CODE_ALN = "ALN";
+        public const string LIVING_STATUS_CODE_WTH = "WTH";
+        public const string LIVING_STATUS_CODE_OTH = "OTH";
         public static Dictionary<string, string> LIVING_STATUS_CODE = new Dictionary<string, string>()
         {
-            { "ALN", "Một mình/ Alone" },
-            { "WTH", "Gia đình/ Family" },
-            { "OTH", "Khác/ Other" },
+            { LIVING_STATUS_CODE_ALN, "Một mình/ Alone" },
+            { LIVING_STATUS_CODE_WTH, "Gia đình/ Family" },
+            { LIVING_STATUS_CODE_OTH, "Khác/ Other" },
         };
+        public const string HOSPITAL_CONCERN_CODE_NON = "NON";
+        public const string HOSPITAL_CONCERN_CODE_REL = "REL";
+        public const string HOSPITAL_CONCERN_CODE_FIN = "FIN";
+        public const string HOSPITAL_CONCERN_CODE_WOR = "WOR";
+        public const string HOSPITAL_CONCERN_CODE_OTH = "OTH";
         public static Dictionary<string, string> HOSPITAL_CONCERN_CODE = new Dictionary<string, string>()
         {
-            { "NON", "Không/ None" },
-            { "REL", "Gia đình, các mối quan hệ/ Family, relationship issues" },
-            { "FIN", "Tài chính/ Financial" },
-            { "WOR", "Lo âu/ Worriedness" },
-            { "OTH", "Khác/ Others" },
+            { HOSPITAL_CONCERN_CODE_NON, "Không/ None" },
+            { HOSPITAL_CONCERN_CODE_REL, "Gia đình, các mối quan hệ/ Family, relationship issues" },
+            { HOSPITAL_CONCERN_CODE_FIN, "Tài chính/ Financial" },
+            { HOSPITAL_CONCERN_CODE_WOR, "Lo âu/ Worriedness" },
+            { HOSPITAL_CONCERN_CODE_OTH, "Khác/ Others" },
         };
         #endregion
 
         #region II. BỆNH SỬ/ MEDICAL HISTORY
+        public const string ADMIT_FROM_CODE_OPD = "OPD";
+        public const string ADMIT_FROM_CODE_ER = "ER";
+        public const string ADMIT_FROM_CODE_VD = "VD";
+        public const string ADMIT_FROM_CODE_OTH = "OTH";
         public static Dictionary<string, string> ADMIT_FROM_CODE = new Dictionary<string, string>()
         {
-            { "OPD", "Khoa khám bệnh/ OPD" },
-            { "ER", "Khoa cấp cứu/ Emergency" },
-            { "VD", "Bác sĩ hợp tác/ Visiting Doctor" },
-            { "OTH", "Khác/Referral" },
+            { ADMIT_FROM_CODE_OPD, "Khoa khám bệnh/ OPD" },
+            { ADMIT_FROM_CODE_ER, "Khoa cấp cứu/ Emergency" },
+            { ADMIT_FROM_CODE_VD, "Bác sĩ hợp tác/ Visiting Doctor" },
+            { ADMIT_FROM_CODE_OTH, "Khác/Referral" },
         };
         public const string ARRIVED_W = "W";
         public const string ARRIVED_WC = "WC";
@@ -77,28 +82,43 @@ namespace EMR.Data.AIH.Dictionary
         public const string SUBSTANCE_ABUSE_OTH = "OTH";
         public static Dictionary<string, string> SUBSTANCE_ABUSE = new Dictionary<string, string>()
         {
-            { "S", "Hút thuốc/ Smoking" },
-            { "A", "Rượu bia/ Acohol" },
-            { "OTH", "Khác/ Other" },
+            { SUBSTANCE_ABUSE_S, "Hút thuốc/ Smoking" },
+            { SUBSTANCE_ABUSE_A, "Rượu bia/ Acohol" },
+            { SUBSTANCE_ABUSE_OTH, "Khác/ Other" },
         };
-
+        public const string HIGH_RISK_PATIENT_CODE_HRT = "HRT";
+        public const string HIGH_RISK_PATIENT_CODE_ELD = "ELD";
+        public const string HIGH_RISK_PATIENT_CODE_WIL = "WIL";
+        public const string HIGH_RISK_PATIENT_CODE_ROS = "ROS";
+        public const string HIGH_RISK_PATIENT_CODE_SDP = "SDP";
+        public const string HIGH_RISK_PATIENT_CODE_CCP = "CCP";
+        public const string HIGH_RISK_PATIENT_CODE_PSP = "PSP";
+        public const string HIGH_RISK_PATIENT_CODE_RES = "RES";
+        public const string HIGH_RISK_PATIENT_CODE_HRF = "HRF";
+        public const string HIGH_RISK_PATIENT_CODE_ISC = "ISC";
+        public const string HIGH_RISK_PATIENT_CODE_PSD = "PSD";
+        public const string HIGH_RISK_PATIENT_CODE_VAN = "VAN";
+        public const string HIGH_RISK_PATIENT_CODE_PLS = "PLS";
         public static Dictionary<string, string> HIGH_RISK_PATIENT_CODE = new Dictionary<string, string>()
         {
             //{ "HRT", "Người bệnh đang điều trị có nguy cơ cao (như chạy thận nhân tạo, hóa trị liệu..)/ Patients that receiving high-risk treatments (such as dialysis, chemotherapy…)" },
-            { "HRT", "Người bệnh đang điều trị hóa trị liệu/ Patients are receiving chemotherapy" },
+            { HIGH_RISK_PATIENT_CODE_HRT, "Người bệnh đang điều trị hóa trị liệu/ Patients are receiving chemotherapy" },
             //{ "ELD", "Người cao tuổi (80 tuổi hoặc hơn)/ Elderly people (80 years old or above)" },
-            { "ELD", "Người cao tuổi (≥ 80 tuổi)/ Elderlies (≥ 80 years)" },
-            { "WIL", "Sản phụ đang chuyển dạ/ Women in labor" }, //+
-            { "ROS", "Người bệnh có nguy cơ tự tử hoặc tự làm hại bản thân/ Patients are at risk of suicide or seft-harm" }, //+
+            { HIGH_RISK_PATIENT_CODE_ELD, "Người cao tuổi (≥ 80 tuổi)/ Elderlies (≥ 80 years)" },
+            { HIGH_RISK_PATIENT_CODE_WIL, "Sản phụ đang chuyển dạ/ Women in labor" }, //+
+            { HIGH_RISK_PATIENT_CODE_ROS, "Người bệnh có nguy cơ tự tử hoặc tự làm hại bản thân/ Patients are at risk of suicide or seft-harm" }, //+
             //{ "SDP", "Những người bệnh tàn tật năng/ Severely disabled patients" },
-            { "SDP", "Người bệnh tàn tật nặng/ Severe disabled patients" },
+            { HIGH_RISK_PATIENT_CODE_SDP, "Người bệnh tàn tật nặng/ Severe disabled patients" },
             //{ "CCP", "Những người bệnh lú lẫn/hôn mê/ Confused or comatose patients" },
-            { "CCP", "Người bệnh lú lẫn/hôn mê/ Confused or comatose patients" },
-            { "PSP", "Sản phụ có thai lưu/ sảy thai/ chấm dứt thai kỳ/ Patient with stillbirth pregnancy/ abortion/ experiencing terminations in pregnancy" }, //+
-            { "RES", "Người bệnh bị kìm giữ/ Restrained patients" },
+            { HIGH_RISK_PATIENT_CODE_CCP, "Người bệnh lú lẫn/hôn mê/ Confused or comatose patients" },
+            { HIGH_RISK_PATIENT_CODE_PSP, "Sản phụ có thai lưu/ sảy thai/ chấm dứt thai kỳ/ Patient with stillbirth pregnancy/ abortion/ experiencing terminations in pregnancy" }, //+
+            { HIGH_RISK_PATIENT_CODE_RES, "Người bệnh bị kìm giữ/ Restrained patients" },
             //{ "HRF", "Những người bệnh có nguy cơ té ngã cao/ Patients with high risk of falls" },
-            { "HRF", "Người bệnh có tiền sử té ngã/ Patient has a history of falls" },
-            { "ISC", "Người bệnh suy giảm miễn dịch/ Patients whose immune systems are compromised" }
+            { HIGH_RISK_PATIENT_CODE_HRF, "Người bệnh có tiền sử té ngã/ Patient has a history of falls" },
+            { HIGH_RISK_PATIENT_CODE_ISC, "Người bệnh suy giảm miễn dịch/ Patients whose immune systems are compromised" },//+
+            { HIGH_RISK_PATIENT_CODE_PSD, "Người bệnh nghi ngờ bị nghiện/ Patients suspected of drug and/or alcohol dependency" },//+
+            { HIGH_RISK_PATIENT_CODE_VAN, "Người bệnh có nguy cơ bị lạm dụng/ ngược đãi/ Victims of abuse or neglect" },//+
+            { HIGH_RISK_PATIENT_CODE_PLS, "Người bệnh cần hỗ trợ sự sống/ Patients on life support" },//+
             //{ "CH", "Trẻ em (< hoặc 8 tuổi)/ Children (<8 years old)" }, //-
         };
         #endregion
@@ -245,46 +265,67 @@ namespace EMR.Data.AIH.Dictionary
             { "PER", "Người/ Person" },
             { "NA", "Không định hướng được/ Disoriented" },
         };
+        public const string MENTAL_STATUS_CODE_AL = "AL";
+        public const string MENTAL_STATUS_CODE_CF = "CF";
+        public const string MENTAL_STATUS_CODE_AG = "AG";
+        public const string MENTAL_STATUS_CODE_AN = "AN";
+        public const string MENTAL_STATUS_CODE_DE = "DE";
+        public const string MENTAL_STATUS_CODE_OTH = "OTH";
         public static Dictionary<string, string> MENTAL_STATUS_CODE = new Dictionary<string, string>()
         {
-            { "AL", "Tỉnh táo/ Alert" },
-            { "CF", "Nhầm lẫn/ Confused" },
-            { "AG", "Kích động/ Agitated" },
-            { "AN", "Lo âu/ Anxious" }, // 10/3/2023
-            { "DE", "Trầm cảm/ Depressed" },
-            { "OTH", "Khác/ Other" },
+            { MENTAL_STATUS_CODE_AL, "Tỉnh táo/ Alert" },
+            { MENTAL_STATUS_CODE_CF, "Nhầm lẫn/ Confused" },
+            { MENTAL_STATUS_CODE_AG, "Kích động/ Agitated" },
+            { MENTAL_STATUS_CODE_AN, "Lo âu/ Anxious" }, // 10/3/2023
+            { MENTAL_STATUS_CODE_DE, "Trầm cảm/ Depressed" },
+            { MENTAL_STATUS_CODE_OTH, "Khác/ Other" },
 
             //{ "FR", "Quấy/ Fretful" }, // 10/3/2023
             //{ "LE", "Lơ mơ/ Lethargic" }, // 10/3/2023
         };
+        public const string HEARING_CODE_N = "N";
+        public const string HEARING_CODE_HI = "HI";
+        public const string HEARING_CODE_HA = "HA";
         public static Dictionary<string, string> HEARING_CODE = new Dictionary<string, string>()
         {
-            { "N", "Bình thường/ Normal" },
-            { "HI", "Khiếm thính/ Hearing impaired" },
-            { "HA", "Dùng máy trợ thính (Trái/Phải)/ Uses hearing aid (Left/Right)" },
+            { HEARING_CODE_N , "Bình thường/ Normal" },
+            { HEARING_CODE_HI, "Khiếm thính/ Hearing impaired" },
+            { HEARING_CODE_HA, "Dùng máy trợ thính (Trái/Phải)/ Uses hearing aid (Left/Right)" },
         };
+        public const string VISION_CODE_NM = "NM";
+        public const string VISION_CODE_GL = "GL";
+        public const string VISION_CODE_CL = "CL";
+        public const string VISION_CODE_OTH = "OTH";
         public static Dictionary<string, string> VISION_CODE = new Dictionary<string, string>()
         {
-            { "NM", "Bình thường/ Normal" },
-            { "GL", "Đeo kính/ Glasses" },
-            { "CL", "Kính sát tròng/ Contact lenses" },
-            { "OTH", "Khác/ Other" },
+            { VISION_CODE_NM , "Bình thường/ Normal" },
+            { VISION_CODE_GL , "Đeo kính/ Glasses" },
+            { VISION_CODE_CL , "Kính sát tròng/ Contact lenses" },
+            { VISION_CODE_OTH, "Khác/ Other" },
         };
+
+        public const string SPEECH_CODE_NM = "NM";
+        public const string SPEECH_CODE_SL = "SL";
+        public const string SPEECH_CODE_AP = "AP";
+        public const string SPEECH_CODE_SI = "SI";
+        public const string SPEECH_CODE_NV = "NV";
+        public const string SPEECH_CODE_NC = "NC";
         public static Dictionary<string, string> SPEECH_CODE = new Dictionary<string, string>()
         {
-            { "NM", "Bình thường/ Normal" },
-            { "SL", "Nói lắp/ Slurred" },
-            { "AP", "Chứng mất ngôn ngữ/ Aphasic" },
-            { "SI", "Khiếm ngôn/ Speech impaired" },
-            { "NV", "Chưa biết nói/ Non-verbal" },
-            { "NC", "Không giao tiếp (Bất tỉnh or mê)/ Non-communicative(Unconscious )" },
+            { SPEECH_CODE_NM, "Bình thường/ Normal" },
+            { SPEECH_CODE_SL, "Nói lắp/ Slurred" },
+            { SPEECH_CODE_AP, "Chứng mất ngôn ngữ/ Aphasic" },
+            { SPEECH_CODE_SI, "Khiếm ngôn/ Speech impaired" },
+            { SPEECH_CODE_NV, "Chưa biết nói/ Non-verbal" },
+            { SPEECH_CODE_NC, "Không giao tiếp (Bất tỉnh or mê)/ Non-communicative(Unconscious )" },
         };
         #endregion
 
         #region 5. Hệ tiêu hóa/ Gastrointestinal system
-        /// <summary>
-        /// Update TBF: Đang cho con bú/ breast feeding
-        /// </summary>
+        public const string DIET_CODE_NM = "NM";
+        public const string DIET_CODE_BF = "BF";
+        public const string DIET_CODE_TBF = "TBF";
+        public const string DIET_CODE_OTH = "OTH";
         public static Dictionary<string, string> DIET_CODE = new Dictionary<string, string>()
         {
             { "NM", "Bình thường/ Normal" },
@@ -293,81 +334,98 @@ namespace EMR.Data.AIH.Dictionary
             { "TBF", "Đang cho con bú/ breast feeding" },
             { "OTH", "Khác/ Other" },
         };
-        /// <summary>
-        /// Update S: Nuốt khó/ Dysphagia
-        /// </summary>
+        public const string DIET_PRE_CODE_V = "V";
+        public const string DIET_PRE_CODE_N = "N";
+        public const string DIET_PRE_CODE_S = "OTH";
         public static Dictionary<string, string> DIET_PRE_CODE = new Dictionary<string, string>()
         {
-            { "V", "Nôn/ Vomiting" },
-            { "N", "Buồn nôn/ Nausea" },
+            { DIET_PRE_CODE_V, "Nôn/ Vomiting" },
+            { DIET_PRE_CODE_N, "Buồn nôn/ Nausea" },
             //{ "S", "Nuốt khó (chuyển đến chuyên gia trị liệu)/ Swalloing difficulties (refer to therapist)" },
-            { "S", "Nuốt khó/ Dysphagia" },
+            { DIET_PRE_CODE_S, "Nuốt khó/ Dysphagia" },
         };
+        public const string BOWEL_ELIMINATION_CODE_TWO = "TWO";
+        public const string BOWEL_ELIMINATION_CODE_ONE = "ONE";
+        public const string BOWEL_ELIMINATION_CODE_EOD = "EOD";
+        public const string BOWEL_ELIMINATION_CODE_OTH = "OTH";
         public static Dictionary<string, string> BOWEL_ELIMINATION_CODE = new Dictionary<string, string>()
         {
-            { "TWO", "2 lần/ ngày (2 times/day)" },
-            { "ONE", "1 lần/ ngày (1 time/day)" },
-            { "EOD", "Cách ngày/ Every other day" },
-            { "OTH", "Khác/ Other" },
+            { BOWEL_ELIMINATION_CODE_TWO, "2 lần/ ngày (2 times/day)" },
+            { BOWEL_ELIMINATION_CODE_ONE, "1 lần/ ngày (1 time/day)" },
+            { BOWEL_ELIMINATION_CODE_EOD, "Cách ngày/ Every other day" },
+            { BOWEL_ELIMINATION_CODE_OTH, "Khác/ Other" },
         };
-        /// <summary>
-        /// - Tính chất phân/ Stool characteristis
-        /// </summary>
+        public const string STOOL_CONSISTENCY_CODE_H = "H";
+        public const string STOOL_CONSISTENCY_CODE_F = "F";
+        public const string STOOL_CONSISTENCY_CODE_L = "L";
+        public const string STOOL_CONSISTENCY_CODE_W = "W";
         public static Dictionary<string, string> STOOL_CONSISTENCY_CODE = new Dictionary<string, string>()
         {
-            { "H", "Cứng/ Hard" },
+            { STOOL_CONSISTENCY_CODE_H, "Cứng/ Hard" },
             //{ "F", "Có hình dạng/ Formed" },
-            { "F", "Có hình dạng/ Shape" },
-            { "L", "Lỏng/ Loose" },
-            { "W", "Phân nước/ Watery" },
+            { STOOL_CONSISTENCY_CODE_F, "Có hình dạng/ Shape" },
+            { STOOL_CONSISTENCY_CODE_L, "Lỏng/ Loose" },
+            { STOOL_CONSISTENCY_CODE_W, "Phân nước/ Watery" },
         };
-        /// <summary>
-        /// - Tình trạng hiện có/ Current condition <br/>
-        /// </summary>
+        public const string GAS_PRESENCE_CODE_N = "N";
+        public const string GAS_PRESENCE_CODE_I = "I";
+        public const string GAS_PRESENCE_CODE_S = "S";
         public static Dictionary<string, string> GAS_PRESENCE_CODE = new Dictionary<string, string>()
         {
-            { "N", "Bình thường/ Normal" },
-            { "I", "Không kiểm soát/ Incontinence" },
+            { GAS_PRESENCE_CODE_N, "Bình thường/ Normal" },
+            { GAS_PRESENCE_CODE_I, "Không kiểm soát/ Incontinence" },
             //{ "S", "Hậu môn nhân tạo/ Stoma" },
-            { "S", "Artificial anus" },
+            { GAS_PRESENCE_CODE_S, "Hậu môn nhân tạo/ Artificial anus" },
         };
         #endregion
 
         #region 6. Hệ tiết niệu sinh dục/ Genitourinary system
+        public const string URINATION_CODE_NM = "NM";
+        public const string URINATION_CODE_NO = "NO";
+        public const string URINATION_CODE_DY = "DY";
+        public const string URINATION_CODE_IN = "IN";
         public static Dictionary<string, string> URINATION_CODE = new Dictionary<string, string>()
         {
             //{ "NM", "Không có vấn đề/ Normal" },
-            { "NM", "Bình thường/ Normal" },
-            { "NO", "Tiểu đêm/ Nocturia" },
-            { "DY", "Khó tiểu/ Dysuria" },
+            { URINATION_CODE_NM, "Bình thường/ Normal" },
+            { URINATION_CODE_NO, "Tiểu đêm/ Nocturia" },
+            { URINATION_CODE_DY, "Khó tiểu/ Dysuria" },
             //{ "FR", "Thường xuyên/ Frequency" },
-            { "IN", "Không kiểm soát/ Incontinece" },
+            { URINATION_CODE_IN, "Không kiểm soát/ Incontinece" },
         };
-
+        public const string MENSTRUATION_CODE_AM = "AM";
+        public const string MENSTRUATION_CODE_ME = "ME";
+        public const string MENSTRUATION_CODE_CY = "CY";
         public static Dictionary<string, string> MENSTRUATION_CODE = new Dictionary<string, string>()
         {
-            { "AM", "Vô kinh/ Amenorrhea" },
-            { "ME", "Mãn kinh/ Menopause" },
-            { "CY", "Chu kỳ (ngày)/ Cycle (day)" },
+            { MENSTRUATION_CODE_AM, "Vô kinh/ Amenorrhea" },
+            { MENSTRUATION_CODE_ME, "Mãn kinh/ Menopause" },
+            { MENSTRUATION_CODE_CY, "Chu kỳ (ngày)/ Cycle (day)" },
         };
 
         #endregion
 
-
+        public const string CONTRACEPTION_CODE_NO = "NO";
+        public const string CONTRACEPTION_CODE_PILL = "PILL";
+        public const string CONTRACEPTION_CODE_OTH = "OTH";
+        public const string CONTRACEPTION_CODE_DEV = "DEV";
         public static Dictionary<string, string> CONTRACEPTION_CODE = new Dictionary<string, string>()
         {
-            { "NO", "Không/ No" },
-            { "PILL", "Thuốc ngừa thai/ Contraceptive pill" },
-            { "OTH", "Khác/ Other" },
-            { "DEV", "Dụng cụ ngừa thai đặt trong tử cung/ Intrauterine Device" },
+            { CONTRACEPTION_CODE_NO, "Không/ No" },
+            { CONTRACEPTION_CODE_PILL, "Thuốc ngừa thai/ Contraceptive pill" },
+            { CONTRACEPTION_CODE_OTH, "Khác/ Other" },
+            { CONTRACEPTION_CODE_DEV, "Dụng cụ ngừa thai đặt trong tử cung/ Intrauterine Device" },
         };
-
+        public const string MUS_HISTORY_JP = "JP";
+        public const string MUS_HISTORY_MS = "MS";
+        public const string MUS_HISTORY_NM = "NM";
+        public const string MUS_HISTORY_JS = "JS";
         public static Dictionary<string, string> MUS_HISTORY = new Dictionary<string, string>()
         {
-            { "JP", "Đau khớp/ Joint pain" },
-            { "MS", "Sự co rút cơ/ Muscle spasms" },
-            { "NM", "Bình thường/ Normal" },
-            { "JS", "Sưng khớp/ Joint swelling" },
+            { MUS_HISTORY_JP, "Đau khớp/ Joint pain" },
+            { MUS_HISTORY_MS, "Sự co rút cơ/ Muscle spasms" },
+            { MUS_HISTORY_NM, "Bình thường/ Normal" },
+            { MUS_HISTORY_JS, "Sưng khớp/ Joint swelling" },
         };
 
         #region 9. Da & Nguy cơ loét tỳ đè/ Skin & Pressure ulcer risk
@@ -382,16 +440,23 @@ namespace EMR.Data.AIH.Dictionary
             { "SW", "Nhiều mồ hôi/ Sweaty" },
             { "RA", "Phát ban/ Rash" },
         };
-
+        public const string WOUNDS_CODE_0 = "0";
+        public const string WOUNDS_CODE_1 = "1";
+        public const string WOUNDS_CODE_2 = "2";
+        public const string WOUNDS_CODE_3 = "3";
+        public const string WOUNDS_CODE_4 = "4";
+        public const string WOUNDS_CODE_5 = "5";
+        public const string WOUNDS_CODE_6 = "6";
         public static Dictionary<string, string> WOUNDS_CODE = new Dictionary<string, string>()
         {
-            { "1", "Máu tụ (1)/ Haematoma" },
-            { "2", "Sự thâm tím (2)/ Bruises" },
-            { "3", "Rách (3)/ Laceration" },
-            { "4", "Sẹo (4)/ Scar" },
-            { "5", "Phỏng (5)/ Burn" },
+            { WOUNDS_CODE_0, "Không/ No" }, //+
+            { WOUNDS_CODE_1, "Máu tụ (1)/ Haematoma" },
+            { WOUNDS_CODE_2, "Sự thâm tím (2)/ Bruises" },
+            { WOUNDS_CODE_3, "Rách (3)/ Laceration" },
+            { WOUNDS_CODE_4, "Sẹo (4)/ Scar" },
+            { WOUNDS_CODE_5, "Phỏng (5)/ Burn" },
             //{ "6", "Loét do tỳ đè (6)/ Pressure sore" },
-            { "6", "Loét do tỳ đè (6)/ Pressure ulcer" },
+            { WOUNDS_CODE_6, "Loét do tỳ đè (6)/ Pressure ulcer" },
         };
         #endregion
 
@@ -413,7 +478,7 @@ namespace EMR.Data.AIH.Dictionary
             //{ "PU", "Chỉ chuẩn bị đồ dùng/ Prepare utensils only" },
             { "PU", "Chỉ chuẩn bị đồ dùng/ Oral care kit prepared only" },
             { "AB", "Hỗ trợ đánh răng/ Assisted toothbrushing" },
-            //{ "OTH", "." }
+            { "OTH", "." }
         };
 
         public static Dictionary<string, string> DENTURES_CODE = new Dictionary<string, string>()
@@ -461,13 +526,15 @@ namespace EMR.Data.AIH.Dictionary
             //{ "DN", "Không tự xoay sở/ Does not turn independently" },
             { "DN", "Không tự xoay trở/ Unable to reposition" },
         };
-
+        public const string AMBULATION_CODE_IN = "IN";
+        public const string AMBULATION_CODE_BF = "BF";
+        public const string AMBULATION_CODE_NA = "NA";
         public static Dictionary<string, string> AMBULATION_CODE = new Dictionary<string, string>()
         {
-            { "IN", "Tự đi/ Independent" },
+            { AMBULATION_CODE_IN, "Tự đi/ Independent" },
             //{ "BF", "Liệt giường/ Bedfast" },
-            { "BF", "Liệt giường/ Bedridden" },
-            { "NA", "Cần hỗ trợ (ghi rõ)/ Need assistance (specify)" },
+            { AMBULATION_CODE_BF, "Liệt giường/ Bedridden" },
+            { AMBULATION_CODE_NA, "Cần hỗ trợ (ghi rõ)/ Need assistance (specify)" },
         };
         //public static Dictionary<string, string> AMBULATION_CODE = new Dictionary<string, string>()
         //{
@@ -560,35 +627,53 @@ namespace EMR.Data.AIH.Dictionary
             { INSTRUCTIONS_PROVIDED_TO_OTH, "Khác/ Other" },
             { INSTRUCTIONS_PROVIDED_TO_NAP, "Không áp dụng/ Not applicable" },
         };
+        public const string PERSONNEL_STA = "STA";
+        public const string PERSONNEL_PAT = "PAT";
         public static Dictionary<string, string> PERSONNEL = new Dictionary<string, string>()
         {
-            { "STA", "Giới thiệu với ĐD phụ trách và nhân viên khác/ Introduction to a nurse in charge and other staff" },
-            { "PAT", "Giới thiệu với NB khác/ Introduction to other patients" },
+            { PERSONNEL_STA, "Giới thiệu với ĐD phụ trách và nhân viên khác/ Introduction to a nurse in charge and other staff" },
+            { PERSONNEL_PAT, "Giới thiệu với NB khác/ Introduction to other patients" },
         };
+        public const string PHYSICAL_FACILITIES_BEL = "BEL";
+        public const string PHYSICAL_FACILITIES_BAT = "BAT";
+        public const string PHYSICAL_FACILITIES_TEL = "TEL";
+        public const string PHYSICAL_FACILITIES_TEP = "TEP";
+        public const string PHYSICAL_FACILITIES_NCS = "NCS";
+        public const string PHYSICAL_FACILITIES_MCO = "MCO";
         public static Dictionary<string, string> PHYSICAL_FACILITIES = new Dictionary<string, string>()
         {
-            { "BEL", "Vị trí giường/ Bed location" },
-            { "BAT", "Phòng tắm/nhà vệ sinh/ Bathroom/toilet" },
-            { "TEL", "Sử dụng tivi/ Use of television" },
-            { "TEP", "Sử dụng điện thoại/ Use of telephone" },
-            { "NCS", "Hệ thống gọi điều dưỡng/ Nurse call system" },
-            { "MCO", "Trạm điều dưỡng và quầy chính/ Nurse station and main counter" }
+            { PHYSICAL_FACILITIES_BEL, "Vị trí giường/ Bed location" },
+            { PHYSICAL_FACILITIES_BAT, "Phòng tắm/nhà vệ sinh/ Bathroom/toilet" },
+            { PHYSICAL_FACILITIES_TEL, "Sử dụng tivi/ Use of television" },
+            { PHYSICAL_FACILITIES_TEP, "Sử dụng điện thoại/ Use of telephone" },
+            { PHYSICAL_FACILITIES_NCS, "Hệ thống gọi điều dưỡng/ Nurse call system" },
+            { PHYSICAL_FACILITIES_MCO, "Trạm điều dưỡng và quầy chính/ Nurse station and main counter" }
         };
+        public const string POLICIES_AND_PROCEDURE_VIH = "VIH";
+        public const string POLICIES_AND_PROCEDURE_PCC = "PCC";
+        public const string POLICIES_AND_PROCEDURE_PUN = "PUN";
+        public const string POLICIES_AND_PROCEDURE_MSE = "MSE";
+        public const string POLICIES_AND_PROCEDURE_PPP = "PPP";
+        public const string POLICIES_AND_PROCEDURE_WCN = "WCN";
         public static Dictionary<string, string> POLICIES_AND_PROCEDURE = new Dictionary<string, string>()
         {
-            { "VIH", "Khách thăm bệnh, giờ thăm/ Visitors and visiting hours" },
-            { "PCC", "Thẻ chăm bệnh/ Patient care card" },
-            { "PUN", "Đồng phục người bệnh/ Patient uniform" },
-            { "MSE", "Dịch vụ ăn uống/ Meal service" },
-            { "PPP", "Quy trình trước và sau phẫu thuật, nếu có/ Pre and postoperative procedures (if available)" },
-            { "WCN", "Số liên lạc với khoa/phòng/ Ward contact number" },
+            { POLICIES_AND_PROCEDURE_VIH, "Khách thăm bệnh, giờ thăm/ Visitors and visiting hours" },
+            { POLICIES_AND_PROCEDURE_PCC, "Thẻ chăm bệnh/ Patient care card" },
+            { POLICIES_AND_PROCEDURE_PUN, "Đồng phục người bệnh/ Patient uniform" },
+            { POLICIES_AND_PROCEDURE_MSE, "Dịch vụ ăn uống/ Meal service" },
+            { POLICIES_AND_PROCEDURE_PPP, "Quy trình trước và sau phẫu thuật, nếu có/ Pre and postoperative procedures (if available)" },
+            { POLICIES_AND_PROCEDURE_WCN, "Số liên lạc với khoa/phòng/ Ward contact number" },
         };
+        public const string SAFETY_PRECAUTIONS_LFE = "LFE";
+        public const string SAFETY_PRECAUTIONS_FPR = "FPR";
+        public const string SAFETY_PRECAUTIONS_IWB = "IWB";
+        public const string SAFETY_PRECAUTIONS_NSH = "NSH";
         public static Dictionary<string, string> SAFETY_PRECAUTIONS = new Dictionary<string, string>()
         {
-            { "LFE", "Vị trí cửa thoát hiểm/ Location of fire exits" },
-            { "FPR", "Biện pháp phòng ngừa té ngã/ Fall precaution" },
-            { "IWB", "Sử dụng vòng đeo tay nhận diện/ Use of an identification wrist band" },
-            { "NSH", "Nguy cơ cháy-Không hút thuốc trong phạm vi bệnh viện/ Fire risk – No smoking hospital" },
+            { SAFETY_PRECAUTIONS_LFE, "Vị trí cửa thoát hiểm/ Location of fire exits" },
+            { SAFETY_PRECAUTIONS_FPR, "Biện pháp phòng ngừa té ngã/ Fall precaution" },
+            { SAFETY_PRECAUTIONS_IWB, "Sử dụng vòng đeo tay nhận diện/ Use of an identification wrist band" },
+            { SAFETY_PRECAUTIONS_NSH, "Nguy cơ cháy-Không hút thuốc trong phạm vi bệnh viện/ Fire risk – No smoking hospital" },
         };
         public const string VB_DENTURES_NO = "NO";
         public const string VB_DENTURES_YES = "YES";
@@ -600,8 +685,8 @@ namespace EMR.Data.AIH.Dictionary
 
         public static Dictionary<string, string> VB_DENTURES = new Dictionary<string, string>()
         {
-            { VB_DENTURES_NO, "Không/ No" },
-            { VB_DENTURES_YES, "Có/ Yes" },
+            //{ VB_DENTURES_NO, "Không/ No" },
+            //{ VB_DENTURES_YES, "Có/ Yes" },
             { VB_DENTURES_WPA, "NB giữ/ With patient" },
             { VB_DENTURES_WRE, "Thân nhân giữ/ With relative" },
             { VB_DENTURES_MAX, "Hàm trên/ Maxilla" },
@@ -616,8 +701,8 @@ namespace EMR.Data.AIH.Dictionary
         public const string VB_HEARING_AID_RIG = "RIG";
         public static Dictionary<string, string> VB_HEARING_AID = new Dictionary<string, string>()
         {
-            { VB_HEARING_AID_NO, "Không/ No" },
-            { VB_HEARING_AID_YES, "Có/ Yes" },
+            //{ VB_HEARING_AID_NO, "Không/ No" },
+            //{ VB_HEARING_AID_YES, "Có/ Yes" },
             { VB_HEARING_AID_WPA, "NB giữ/ With patient" },
             { VB_HEARING_AID_WRE, "Thân nhân giữ/ With relative" },
             { VB_HEARING_AID_LEF, "Trái/ Left" },
@@ -629,8 +714,8 @@ namespace EMR.Data.AIH.Dictionary
         public const string VB_EYEGLASSES_WRE = "WRE";
         public static Dictionary<string, string> VB_EYEGLASSES = new Dictionary<string, string>()
         {
-            { VB_EYEGLASSES_NO, "Không/ No" },
-            { VB_EYEGLASSES_YES, "Có/ Yes" },
+            //{ VB_EYEGLASSES_NO, "Không/ No" },
+            //{ VB_EYEGLASSES_YES, "Có/ Yes" },
             { VB_EYEGLASSES_WPA, "NB giữ/ With patient" },
             { VB_EYEGLASSES_WRE, "Thân nhân giữ/ With relative" }
         };
@@ -640,8 +725,8 @@ namespace EMR.Data.AIH.Dictionary
         public const string VB_CONTACT_LENSES_WRE = "WRE";
         public static Dictionary<string, string> VB_CONTACT_LENSES = new Dictionary<string, string>()
         {
-            { VB_CONTACT_LENSES_NO, "Không/ No" },
-            { VB_CONTACT_LENSES_YES, "Có/ Yes" },
+            //{ VB_CONTACT_LENSES_NO, "Không/ No" },
+            //{ VB_CONTACT_LENSES_YES, "Có/ Yes" },
             { VB_CONTACT_LENSES_WPA, "NB giữ/ With patient" },
             { VB_CONTACT_LENSES_WRE, "Thân nhân giữ/ With relative" }
         };
@@ -652,8 +737,8 @@ namespace EMR.Data.AIH.Dictionary
         public const string VB_CASH_JEWELRY_HSB = "HSB";
         public static Dictionary<string, string> VB_CASH_JEWELRY = new Dictionary<string, string>()
         {
-            { VB_CASH_JEWELRY_NO, "Không/ No" },
-            { VB_CASH_JEWELRY_YES, "Có/ Yes" },
+            //{ VB_CASH_JEWELRY_NO, "Không/ No" },
+            //{ VB_CASH_JEWELRY_YES, "Có/ Yes" },
             { VB_CASH_JEWELRY_WPA, "NB giữ/ With patient" },
             { VB_CASH_JEWELRY_WRE, "Thân nhân giữ/ With relative" },
             { VB_CASH_JEWELRY_HSB, "Trong tủ đầu giường phòng/ In the hospital safety box" },

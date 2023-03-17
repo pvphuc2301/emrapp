@@ -2309,6 +2309,7 @@ namespace EMR
         public dynamic dis_planning { get; set; }
         public dynamic dis_management { get; set; }
         public dynamic assess_date_time { get; set; }
+        public int document_version { get; set; }
         #endregion
 
         #region

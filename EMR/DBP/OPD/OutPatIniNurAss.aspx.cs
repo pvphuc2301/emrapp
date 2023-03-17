@@ -123,13 +123,7 @@ namespace EMR.DBP.OPD
         }
         private void PostBackEvent()
         {
-            switch (Request["__EVENTTARGET"])
-            {
-                //case "clearSession":
-                //    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
-                //    break;
-
-            }
+            
         }
 
         #region Binding Data
